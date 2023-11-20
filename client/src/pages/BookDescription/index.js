@@ -31,47 +31,40 @@ function BookDescription() {
     getBook();
   }, []);
   return (
-    bookData && <div>
-      <Row gutter={[16, 16]} align="middle" justify="center">
-        <Col
-          xs={24}
-          sm={24}
-          md={12}
-          lg={12}
-          xl={12}
-          className="flex flex-col gap-2"
-        >
-          <h1 className="text-2xl text-secondary uppercase font-bold mt-2">
-            {bookData?.title}
-          </h1>
-          <hr />
-          <div className="flex justify-center">
-            <img src={bookData.image} alt="" height={400} width={400} />
-          </div>
-
-          <p>{bookData?.description}</p>
-          <div className="flex justify-between">
-            <h1 className="text-md">Author</h1>
-            <h1 className="text-md">{bookData?.author}</h1>
-          </div>
-          <div className="flex justify-between">
-            <h1 className="text-md">Publisher</h1>
-            <h1 className="text-md">{bookData?.publisher}</h1>
-          </div>
-          <div className="flex justify-between">
-            <h1 className="text-md">Published Date</h1>
-            <h1 className="text-md">
-              {moment(bookData?.publishedDate).format("MMMM Do YYYY")}
-            </h1>
-          </div>
-          <div className="flex justify-between">
-            <h1 className="text-md">Available Copies</h1>
-            <h1 className="text-md">{bookData?.availableCopies}</h1>
-          </div>
-        </Col>
-      </Row>
-    </div>
+    bookData && (
+      <div className="book-details-container">
+        <Row gutter={[16, 16]} align="middle" justify="center">
+          <Col xs={24} sm={24} md={12} lg={12} xl={12} className="book-details">
+            <h1 className="book-title">{bookData?.title}<h2>({bookData?.category})</h2></h1>
+            <hr />
+            <div className="book-image-container">
+              <img src={bookData.image} alt={bookData.title} />
+            </div>
+            <p className="book-description">{bookData?.description}</p>
+            <div className="book-info">
+              <div className="info-item">
+                <span className="info-label">Author:</span>
+                <span className="info-value">{bookData?.author}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Publisher:</span>
+                <span className="info-value">{bookData?.publisher}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Published Date:</span>
+                <span className="info-value">
+                  {moment(bookData?.publishedDate).format("MMMM Do YYYY")}
+                </span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Available Copies:</span>
+                <span className="info-value">{bookData?.availableCopies}</span>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </div>
+    )
   );
-}
-
+    }  
 export default BookDescription;

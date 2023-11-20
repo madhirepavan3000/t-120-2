@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Col, message, Row, Badge, Form } from "antd";
+import React, { useState, useEffect } from "react";
+import { Col, message, Row, Badge} from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GetAllBooks } from "../../apicalls/books";
@@ -27,61 +27,35 @@ function Home() {
     }
   };
 
+
   useEffect(() => {
     getBooks();
-  }, [selectedCategory]); // Run the effect whenever the selectedCategory changes
+  }, [selectedCategory]);
 
   return (
-    <div className="mt-2">
-      <Col span={8}>
-        <Form.Item
-          label="Category"
-          name="category"
-          rules={[{ required: true, message: "please input category" }]}
+    <div className="mt-2 card-container">
+      {books.map((book) => (
+        <div
+          className="card"
+          key={book._id}
+          onClick={() => navigate(`/book/${book._id}`)}
         >
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+          <Badge.Ribbon
+            text={book.availableCopies > 0 ? "Available" : "Not Available"}
+            color={book.availableCopies > 0 ? "green" : "red"}
           >
-            <option value="">Select category</option>
-            <option value="mythology">Mythology</option>
-            <option value="fiction">Fiction</option>
-            <option value="non-fiction">Non-Fiction</option>
-            <option value="biography">Biography</option>
-            <option value="poetry">Poetry</option>
-            <option value="drama">Drama</option>
-            <option value="history">History</option>
-          </select>
-        </Form.Item>
-      </Col>
-      <Row gutter={[16, 16]}>
-        {books.map((book) => (
-          <Col
-            xs={24}
-            sm={24}
-            md={12}
-            lg={6}
-            xl={6}
-            key={book._id}
-            onClick={() => navigate(`/book/${book._id}`)}
-          >
-            <Badge.Ribbon
-              text={
-                book.availableCopies > 0 ? "Available" : "Not Available"
-              }
-              color={book.availableCopies > 0 ? "green" : "red"}
-            >
-              <div className="rounded bg-white p-2 shadow flex flex-col gap-1">
-                <img src={book.image} height="350px" alt={book.title} />
-                <h1 className="text-md text-secondary uppercase font-bold mt-2">
-                  {book.title}
-                </h1>
-              </div>
-            </Badge.Ribbon>
-          </Col>
-        ))}
-      </Row>
+            <div className="card-content">
+              <img src={book.image} alt={book.title} />
+              <h1 className="card-title">{book.title}</h1>
+              <p className="card-status">
+                {book.availableCopies > 0 ? "Available" : "Not Available"}
+              </p>
+            </div>
+          </Badge.Ribbon>
+        </div>
+      ))}
     </div>
+    
   );
 }
 

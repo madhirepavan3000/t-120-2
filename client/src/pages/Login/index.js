@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Form, message } from "antd";
+import {Form, Input,  message} from "antd";
 import Button from "../../components/Button";
 import {Link, useNavigate} from "react-router-dom"
 import { LoginUser } from "../../apicalls/users";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
+import backgroundImg from "./room-interior-design.jpg";
 
 
 
@@ -37,8 +38,11 @@ function Login() {
   },[]);
 
   return (
-    <div className="h-screen bg-primary flex items-center justify-center">
-      <div className="authentication-form bg-white p-3 rounded">
+    <div className="h-screen bg-primary flex items-center justify-center bg-c" style={{
+      backgroundImage: `url(${backgroundImg})`,
+      }}>
+
+      <div className=" authentication-form bg-white p-3 rounded col-6">
         <h1 className="text-secondary text-2xl font-bold mb-1">Vit-Ap Library Login</h1> 
         <hr />
         <Form layout="vertical" onFinish={onFinish} >  
@@ -49,7 +53,7 @@ function Login() {
               message:"Please input your email!",
             },
           ]}>
-            <input type="email" placeholder="Email" />
+            <Input type="email" placeholder="Email" />
           </Form.Item>
           <Form.Item label="Password" name="password"
           rules={[
@@ -58,7 +62,7 @@ function Login() {
               message:"Please input your Password!",
             },
           ]}>
-            <input type="password" placeholder="Password" />
+            <Input type="password" placeholder="Password" />
           </Form.Item>
 
           <div className="text-center mt-2 flex flex-col gap-1">

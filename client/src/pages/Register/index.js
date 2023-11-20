@@ -1,19 +1,21 @@
 import React, { useEffect } from "react";
-import { Form, message } from "antd";
-import Button from "../../components/Button";
+import { Form, Input, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../../apicalls/users";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
+import backgroundImg from "./Title_68.jpg";
 
 function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
       const response = await RegisterUser(values);
       dispatch(HideLoading());
+
       if (response.success) {
         message.success(response.message);
         navigate("/login");
@@ -31,10 +33,13 @@ function Register() {
     if (token) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   return (
-    <div className="h-screen bg-primary flex items-center justify-center">
+    <div className="h-screen bg-primary flex items-center justify-center " style={{
+      backgroundImage: `url(${backgroundImg})`,
+      backgroundPosition: "center",
+    }}>
       <div className="authentication-form bg-white p-3 rounded">
         <h1 className="text-secondary text-2xl font-bold mb-1">
           Vit-Ap Library Register
@@ -51,8 +56,9 @@ function Register() {
               },
             ]}
           >
-            <input type="text" placeholder="Name" />
+            <Input placeholder="Name" />
           </Form.Item>
+
           <Form.Item
             label="Email"
             name="email"
@@ -63,8 +69,9 @@ function Register() {
               },
             ]}
           >
-            <input type="email" placeholder="Email" />
+            <Input type="email" placeholder="Email" />
           </Form.Item>
+
           <Form.Item
             label="Phone number"
             name="phone"
@@ -75,8 +82,9 @@ function Register() {
               },
             ]}
           >
-            <input type="number" placeholder="Phone number" />
+            <Input type="number" placeholder="Phone number" />
           </Form.Item>
+
           <Form.Item
             label="Password"
             name="password"
@@ -87,13 +95,15 @@ function Register() {
               },
             ]}
           >
-            <input type="password" placeholder="Password" />
+            <Input.Password placeholder="Password" />
           </Form.Item>
 
           <div className="text-center mt-2 flex flex-col gap-1">
-            <Button title="Register" type="submit" />
+            <Button type="primary" htmlType="submit">
+              Register
+            </Button>
             <Link to="/login" className="text-primary underline text-sm">
-              Already have an account? Click here to register
+              Already have an account? Click here to login
             </Link>
           </div>
         </Form>
@@ -101,4 +111,5 @@ function Register() {
     </div>
   );
 }
+
 export default Register;
