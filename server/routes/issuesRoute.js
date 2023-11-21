@@ -5,28 +5,40 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 //issue a book to patron
 router.post("/issue-new-book", authMiddleware, async (req, res) => {
-    try {
-      // inventory adjustment (available copies must be decremented by 1)
+  try {
+    // Fetch the book details
+    const book = await Book.findOne({ _id: req.body.book });
+
+    // Check if available copies are greater than zero
+    if (book.availableCopies > 0) {
+      // Inventory adjustment (decrement available copies by 1)
       await Book.findOneAndUpdate(
         { _id: req.body.book },
         { $inc: { availableCopies: -1 } }
       );
-  
-      // issue book to patron (create new issue record)
+
+      // Issue book to patron (create new issue record)
       const newIssue = new Issue(req.body);
       await newIssue.save();
+      
       return res.send({
         success: true,
         message: "Book issued successfully",
         data: newIssue,
       });
-    } catch (error) {
+    } else {
       return res.send({
         success: false,
-        message: error.message,
+        message: "Book is not available",
       });
     }
-  });
+  } catch (error) {
+    return res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 
 //get  issues
 router.post("/get-issues", authMiddleware, async (req, res) => {
