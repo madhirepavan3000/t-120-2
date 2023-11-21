@@ -45,7 +45,7 @@ const Home = () => {
           <div className="text">
             <h1></h1>
           </div>
-          <div class="wrapper">
+          <div className="wrapper">
             <span></span>
             <span></span>
             <span></span>
@@ -58,9 +58,9 @@ const Home = () => {
             <span></span>
           </div>
 
-          <div class="banner">
-            <div class="content">
-              <h2>
+          <div className="banner">
+            <div className="content">
+              
                 <h1>
                   Introducing education, the ultimate library management system
                   based in Guntur, TG. Our innovative platform is designed to
@@ -73,7 +73,7 @@ const Home = () => {
                   processes and embrace the future of library management with
                   education
                 </h1>
-              </h2>
+              
             </div>
           </div>
         </div>
