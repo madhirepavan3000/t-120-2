@@ -1,0 +1,149 @@
+.Container {
+    position:fixed;
+    min-height: 300px;
+    max-height: 800px;
+    overflow: hidden;
+    margin-bottom: 500px;
+  }
+  
+  /* Style the video: 100% width and height to cover the entire window */
+  .Video {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Add some content at the bottom of the video/page */
+  .Content {
+    position: absolute;
+    top: 0;
+    color: #f1f1f1;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  .SubContent {
+    text-align: center;
+    padding: 10px;
+  }
+  .SubContent p {
+    color: #eeeeeead;
+    font-size: 1.3rem;
+  }
+  .SubContent button {
+    font-weight: bold;
+    margin-top: 30px;
+    color: #f1f1f1;
+    border: #f1f1f1 1px solid;
+    padding: 10px 5px;
+    background-color: hsla(0, 0%, 0%, 0);
+    font-size: 1.25rem;
+    border-radius: 5px;
+  }
+  .SubContent button:hover {
+    background-color: #f1f1f1;
+    color: #000000c0;
+  }
+  
+  .SubContent img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: block;
+    margin: 15px auto;
+    border: #f1f1f1 1px solid;
+  }
+  .btn-outline-dark {
+    background-color:  #E84545;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .btn-outline-dark:hover {
+    background-color:  #E84545;
+    color: #000;
+  }
+
+/* Home.css */
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  background-color: rgb(243, 208, 106);
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  height: 35px;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  background-color: #E84545;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+.main-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+/* Add these styles to your existing CSS file or create a new one */
+/* Add these styles to your existing CSS file or create a new one */
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px; /* Adjust the margin based on your design */
+}
+
+.image {
+  max-width: 50%; /* Adjust the maximum width of the image container */
+}
+
+img {
+  max-width: 70%;
+  max-height: 100%;
+  border-radius: 8px; /* Add border-radius for a rounded appearance */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.text {
+  font-size: 16px;
+  padding: 20px;
+  max-width: 50%; /* Adjust the maximum width of the text container */
+  border-left: 1px solid #ccc; /* Add a border between image and text */
+}
+
+/* Optionally, you can add more styling for better presentation */

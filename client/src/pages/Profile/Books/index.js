@@ -9,7 +9,6 @@ import moment from "moment";
 import Issues from "./Issues";
 import IssueForm from "./IssueForm";
 
-
 function Books() {
   const [formType, setFormType] = useState("add");
   const [selectedBook, setSelectedBook] = useState(null);
@@ -17,6 +16,8 @@ function Books() {
   const [openIssues, setOpenIssues] = React.useState(false);
   const [openIssuesForm, setOpenIssuesForm] = React.useState(false);
   const [books, setBooks] = React.useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const dispatch = useDispatch();
 
   const getBooks = async () => {
@@ -35,10 +36,6 @@ function Books() {
     }
   };
 
-  useEffect(() => {
-    getBooks();
-  }, []);
-
   const deleteBook = async (id) => {
     try {
       dispatch(ShowLoading());
@@ -55,6 +52,19 @@ function Books() {
       message.error(error.message);
     }
   };
+
+  useEffect(() => {
+    getBooks();
+  }, []);
+  const handleSearch = (value) => {
+    // Ensure that value is a string before calling toLowerCase
+    const searchTerm = typeof value === "string" ? value.toLowerCase() : "";
+    setSearchTerm(searchTerm);
+  };
+
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(searchTerm)
+  );
 
   const columns = [
     {
@@ -130,9 +140,26 @@ function Books() {
       ),
     },
   ];
+
+  const tableHeaderStyle = {
+    background: " rgb(117, 28, 242)", // Set the background color to orange
+    fontWeight: "bold",
+    color: "white", // Optionally, set other styles for the header
+  };
   return (
     <div>
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center mb-4">
+        <div className="custom-search-container" style={{ marginLeft: "10px" }}>
+          <input
+            type="text"
+            placeholder="Search books..."
+            onChange={(e) => handleSearch(e.target.value)}
+            className="custom-search-input"
+          />
+          <button className="custom-search-button" onClick={handleSearch}>
+            Search
+          </button>
+        </div>
         <Button
           title="Add Book"
           onClick={() => {
@@ -142,7 +169,19 @@ function Books() {
           }}
         />
       </div>
-      <Table columns={columns} dataSource={books} className="mt-1" />
+      <Table
+        columns={columns}
+        dataSource={filteredBooks}
+        className="mt-1 custom-table"
+        components={{
+          header: {
+            cell: (props) => <th style={tableHeaderStyle}>{props.children}</th>,
+          },
+        }}
+        scroll={{ x: true }}
+        responsive
+      />
+
       {openBookForm && (
         <BookForm
           open={openBookForm}
@@ -162,7 +201,6 @@ function Books() {
           reloadBooks={getBooks}
         />
       )}
-
       {openIssuesForm && (
         <IssueForm
           open={openIssuesForm}
@@ -176,5 +214,4 @@ function Books() {
     </div>
   );
 }
-
 export default Books;

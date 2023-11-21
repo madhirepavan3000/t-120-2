@@ -1,4 +1,4 @@
-import { message, Table } from "antd";
+import { message, Table,Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../../redux/loadersSlice";
@@ -7,10 +7,14 @@ import { GetAllUsers } from "../../../apicalls/users";
 import Button from "../../../components/Button";
 import IssuedBooks from "./IssuedBooks";
 
+const { Search } = Input;
+
 function Users({ role }) {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showIssuedBooks, setShowIssuedBooks] = useState(false);
   const [users, setUsers] = React.useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const dispatch = useDispatch();
   const getUsers = async () => {
     try {
@@ -31,6 +35,14 @@ function Users({ role }) {
   useEffect(() => {
     getUsers();
   }, []);
+  const handleSearch = (value) => {
+    setSearchTerm(value.toLowerCase());
+  };
+
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm)
+  );
+
 
   const columns = [
     {
@@ -54,14 +66,14 @@ function Users({ role }) {
       dataIndex: "createdAt",
       render: (createdAt) => moment(createdAt).format("DD-MM-YYYY hh:mm A"),
     },
-    {
+    role === "patron" && {
       title: "Actions",
       dataIndex: "actions",
       render: (actions, record) => (
         <div>
           <Button
             title="Books"
-            variant="outlined"
+            variant="contained"
             onClick={() => {
               setSelectedUser(record);
               setShowIssuedBooks(true);
@@ -70,10 +82,36 @@ function Users({ role }) {
         </div>
       ),
     },
-  ];
+  ].filter(Boolean);
+  const tableHeaderStyle = {
+    background: " rgb(117, 28, 242)", // Set the background color to orange
+    fontWeight: "bold",
+    color: "white", // Optionally, set other styles for the header
+  };
+
   return (
     <div>
-      <Table dataSource={users} columns={columns} />
+      <div style={{ marginBottom: 16 }}>
+      <div className="custom-search-container" style={{marginLeft:"10px"}}>
+
+        <input
+        type="text"
+          placeholder="Search users by name"
+          onChange={(e) => handleSearch(e.target.value)}
+          className="custom-search-input"    style={{"width":"200px"}}    />
+          <button className="custom-search-button">
+            Search
+          </button>
+      </div></div>
+      <Table
+        dataSource={filteredUsers}
+        columns={columns}
+        components={{
+          header: {
+            cell: (props) => <th style={tableHeaderStyle}>{props.children}</th>,
+          },
+        }}
+      />
 
       {showIssuedBooks && (
         <IssuedBooks

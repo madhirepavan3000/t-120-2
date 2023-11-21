@@ -5,24 +5,26 @@ import Users from "./Users";
 import Reports from "./Reports";
 import { useSelector } from "react-redux";
 import BasicDetails from "./BasicDetails";
-import BorrowedBooks from "./BorrowedBooks";
-
+import BorrowedBooks from "../Profile/BorrowedBooks";
 const TabPane = Tabs.TabPane;
 
 function Profile() {
   const { user } = useSelector((state) => state.users);
   const role = user.role;
+
   return (
     <div>
       <Tabs defaultActiveKey="1">
-        <TabPane tab="General" key={1}>
+        <TabPane tab="Details" key="1">
           <BasicDetails />
         </TabPane>
-        {role ==="patron" && (
-          <TabPane tab="Books Borrowed" key={2}>
-          <BorrowedBooks />
-        </TabPane>
+
+        {role === "patron" && (
+             <TabPane tab="Books Borrowed" key="2">
+             <BorrowedBooks />
+           </TabPane>
         )}
+
         {role !== "patron" && (
           <TabPane tab="Books" key="3">
             <Books />
@@ -38,6 +40,7 @@ function Profile() {
             <Users role="librarian" />
           </TabPane>
         )}
+       
         {role === "admin" && (
           <TabPane tab="Admins" key="6">
             <Users role="admin" />
@@ -48,6 +51,7 @@ function Profile() {
             <Reports />
           </TabPane>
         )}
+          
       </Tabs>
     </div>
   );

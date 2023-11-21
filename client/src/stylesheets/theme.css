@@ -1,6 +1,6 @@
 :root {
-    --colour-primary: #034742;
-    --colour-secondary: #4f1803;
+    --colour-primary: rgb(117, 28, 242);
+    --colour-secondary: rgb(30, 200, 243);
 }
 
 .bg-primary {
